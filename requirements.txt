@@ -1,0 +1,35 @@
+# CITYVISION AI - Python Dependencies Specification
+# Target runtime: Python 3.10 - 3.13
+
+# Core Web & API Framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+pydantic>=2.10.0
+websockets>=14.0
+
+# Computer Vision & Numerical Computing
+numpy>=1.24.0
+opencv-python>=4.10.0
+pillow>=10.0.0
+
+# Deep Learning & Models (Inference on CPU / CUDA)
+torch>=2.2.0
+torchvision>=0.17.0
+ultralytics>=8.3.0
+
+# Tracking & Utilities
+scipy>=1.11.0
+scikit-learn>=1.4.0
+
+# Configuration & Data Storage
+pyyaml>=6.0.2
+python-dotenv>=1.0.1
+sqlalchemy>=2.0.36
+alembic>=1.14.0
+geoalchemy2>=0.17.0
+psycopg[binary]>=3.2.0
+
+# Testing
+pytest>=8.3.0
+httpx>=0.28.0
+pytest-asyncio>=0.25.0

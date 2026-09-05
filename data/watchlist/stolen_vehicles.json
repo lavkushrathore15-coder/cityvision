@@ -1,0 +1,37 @@
+[
+  {
+    "plate_number": "DL01AB1234",
+    "reason": "Wanted - Stolen Honda City (FIR #84920 Crime Branch)",
+    "alert_level": "CRITICAL",
+    "vehicle_type": "Sedan",
+    "reported_date": "2026-09-01T10:00:00Z"
+  },
+  {
+    "plate_number": "HR26DK9988",
+    "reason": "Hit and run investigation suspect - NCR Traffic Notice",
+    "alert_level": "CRITICAL",
+    "vehicle_type": "SUV",
+    "reported_date": "2026-09-03T14:30:00Z"
+  },
+  {
+    "plate_number": "UP16XY5544",
+    "reason": "Unpaid commercial toll evasion / Impound notice",
+    "alert_level": "HIGH",
+    "vehicle_type": "Truck",
+    "reported_date": "2026-09-04T08:15:00Z"
+  },
+  {
+    "plate_number": "TEMP-2026-X",
+    "reason": "Expired temporary dealer permit - Unauthorized public transit",
+    "alert_level": "HIGH",
+    "vehicle_type": "Coupe",
+    "reported_date": "2026-09-04T12:00:00Z"
+  },
+  {
+    "plate_number": "RJ14AB1234",
+    "reason": "Verified Demonstration Test Target (Inter-State Pass-Through)",
+    "alert_level": "MEDIUM",
+    "vehicle_type": "Sedan",
+    "reported_date": "2026-09-05T06:00:00Z"
+  }
+]

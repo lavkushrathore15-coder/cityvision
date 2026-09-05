@@ -1,0 +1,64 @@
+# CITYVISION AI - Multi-Container Architecture
+# Justified for: Standardized microservice orchestration (Backend API, Frontend Dashboard, PostGIS, Redis)
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: cityvision_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://cityvision:cityvision@db:5432/cityvision_db
+      - REDIS_URL=redis://redis:6379/0
+      - INFERENCE_DEVICE=cpu
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./config:/app/config
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend
+    container_name: cityvision_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: cityvision_postgis
+    environment:
+      POSTGRES_USER: cityvision
+      POSTGRES_PASSWORD: cityvision
+      POSTGRES_DB: cityvision_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cityvision -d cityvision_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: cityvision_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  postgis_data:

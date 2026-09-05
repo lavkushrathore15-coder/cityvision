@@ -1,0 +1,58 @@
+[
+  {
+    "id": "CAM-001",
+    "name": "North Gateway Intersection",
+    "latitude": 28.6139,
+    "longitude": 77.209,
+    "heading_deg": 45.0,
+    "fps": 15,
+    "source_type": "file",
+    "stream_uri": "data/sample_videos/cam_01.mp4",
+    "status": "configured",
+    "description": "North Gateway Intersection"
+  },
+  {
+    "id": "CAM-002",
+    "name": "Central Ring Road Eastbound",
+    "latitude": 28.618,
+    "longitude": 77.215,
+    "heading_deg": 90.0,
+    "fps": 15,
+    "source_type": "file",
+    "stream_uri": "data/sample_videos/cam_02.mp4",
+    "status": "configured"
+  },
+  {
+    "id": "CAM-003",
+    "name": "South Metro Junction",
+    "latitude": 28.609,
+    "longitude": 77.212,
+    "heading_deg": 180.0,
+    "fps": 15,
+    "source_type": "file",
+    "stream_uri": "data/sample_videos/cam_03.mp4",
+    "status": "configured"
+  },
+  {
+    "id": "CAM-004",
+    "name": "West Tech Park Avenue",
+    "latitude": 28.6145,
+    "longitude": 77.202,
+    "heading_deg": 270.0,
+    "fps": 15,
+    "source_type": "file",
+    "stream_uri": "data/sample_videos/cam_04.mp4",
+    "status": "configured"
+  },
+  {
+    "id": "CAM-005",
+    "name": "City Terminal Outer Exit",
+    "latitude": 28.622,
+    "longitude": 77.2185,
+    "heading_deg": 120.0,
+    "fps": 15,
+    "source_type": "file",
+    "stream_uri": "data/sample_videos/cam_05.mp4",
+    "status": "configured"
+  }
+]
