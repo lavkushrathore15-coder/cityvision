@@ -21,11 +21,20 @@ import type {
   DemoStatusResponse,
 } from '../types';
 
+// Resolve base URL from bound service environment variable (e.g. Vercel service binding BACKEND_URL),
+// explicit Vite build env, browser origin, or local development fallback.
+const boundBackendUrl =
+  typeof process !== 'undefined' && process.env?.BACKEND_URL
+    ? `${process.env.BACKEND_URL.replace(/\/$/, '')}/api/v1`
+    : undefined;
+
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
+  boundBackendUrl ||
   (typeof window !== 'undefined' && window.location.origin
     ? `${window.location.origin}/api/v1`
     : 'http://localhost:8000/api/v1');
+
 
 async function handleResponse<T>(res: Response, errorMessage: string): Promise<T> {
   if (!res.ok) {
@@ -288,7 +297,11 @@ export function connectTelemetryWebSocket(
     const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     wsUrl = `${proto}//${window.location.host}${API_BASE_URL}/ws/dashboard`;
   } else {
-    wsUrl = 'ws://localhost:8000/api/v1/ws/dashboard';
+    const boundWsHost =
+      typeof process !== 'undefined' && process.env?.BACKEND_URL
+        ? process.env.BACKEND_URL.replace(/^http/, 'ws').replace(/\/$/, '')
+        : 'ws://localhost:8000';
+    wsUrl = `${boundWsHost}/api/v1/ws/dashboard`;
   }
   const ws = new WebSocket(wsUrl);
 

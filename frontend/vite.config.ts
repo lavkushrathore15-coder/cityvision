@@ -1,6 +1,10 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+// Resolve backend target from Vercel service binding (BACKEND_URL) or default to local dev server
+const backendTarget = process.env.BACKEND_URL || 'http://127.0.0.1:8000'
+const wsTarget = backendTarget.replace(/^http/, 'ws')
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -8,17 +12,18 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: backendTarget,
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://127.0.0.1:8000',
+        target: wsTarget,
         ws: true,
       },
       '/demo_videos': {
-        target: 'http://127.0.0.1:8000',
+        target: backendTarget,
         changeOrigin: true,
       },
     },
   },
 })
+

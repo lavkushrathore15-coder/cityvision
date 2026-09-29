@@ -15,8 +15,8 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "true").lower() in ("true", "1")
     
     # Server
-    HOST: str = os.getenv("BACKEND_HOST", "127.0.0.1")
-    PORT: int = int(os.getenv("BACKEND_PORT", "8000"))
+    HOST: str = os.getenv("BACKEND_HOST", "0.0.0.0")
+    PORT: int = int(os.getenv("BACKEND_PORT", os.getenv("PORT", "8000")))
     
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR}/data/cityvision.db")
@@ -55,12 +55,29 @@ class Settings:
     SECRET_KEY: str = os.getenv("SECRET_KEY", "cityvision-dev-insecure-change-in-production")
     
     # CORS
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ]
+    _cors_env = os.getenv("CORS_ORIGINS")
+    CORS_ORIGINS: List[str] = (
+        [origin.strip() for origin in _cors_env.split(",") if origin.strip()]
+        if _cors_env
+        else [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:8000",
+            "http://127.0.0.1:8000",
+            *(
+                [f"https://{os.getenv('VERCEL_URL')}", f"http://{os.getenv('VERCEL_URL')}"]
+                if os.getenv("VERCEL_URL")
+                else []
+            ),
+            *(
+                [os.getenv("FRONTEND_URL").strip()]
+                if os.getenv("FRONTEND_URL")
+                else []
+            ),
+        ]
+    )
 
 
 settings = Settings()
