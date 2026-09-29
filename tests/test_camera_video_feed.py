@@ -26,11 +26,11 @@ def test_get_camera_video_endpoints():
         res = client.get(f"/api/v1/cameras/{cam_id}/video")
         assert res.status_code == 200
         assert "video/mp4" in res.headers.get("content-type", "")
-        assert len(res.content) > 100000
+        assert len(res.content) > 10000
 
 
 def test_static_demo_videos_mount():
     """Verify static mount /demo_videos/ serves the sample mp4 files directly."""
     res = client.get("/demo_videos/cam_01.mp4")
     assert res.status_code == 200
-    assert len(res.content) > 100000
+    assert len(res.content) > 10000

@@ -66,6 +66,7 @@ class Settings:
             "http://127.0.0.1:3000",
             "http://localhost:8000",
             "http://127.0.0.1:8000",
+            "https://cityvision-ai.vercel.app",
             *(
                 [f"https://{os.getenv('VERCEL_URL')}", f"http://{os.getenv('VERCEL_URL')}"]
                 if os.getenv("VERCEL_URL")

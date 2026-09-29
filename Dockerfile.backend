@@ -23,6 +23,7 @@ COPY backend/ ./backend/
 COPY ai/ ./ai/
 COPY config/ ./config/
 COPY data/ ./data/
+COPY alembic.ini ./
 
 EXPOSE 8000
 

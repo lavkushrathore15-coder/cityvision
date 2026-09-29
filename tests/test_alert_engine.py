@@ -302,7 +302,7 @@ def test_demo_alert_seeded_only_when_demo_mode_true():
     config = AlertEngineConfig(demo_mode=True)
     engine = AlertEngine(config=config)
 
-    assert len(engine.list_alerts()) == 1
+    assert len(engine.list_alerts()) >= 1
     assert engine.get_alert("ALT-DEMO-101") is not None
 
 

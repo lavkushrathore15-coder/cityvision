@@ -38,6 +38,11 @@ ENV/
 .env.local
 .env.*.local
 
+# Hugging Face deployment working directory
+.hf_space/
+cloudflared.exe
+
+
 # Node / Frontend
 node_modules/
 frontend/dist/

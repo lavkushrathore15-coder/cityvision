@@ -137,14 +137,16 @@ def test_system_mode_switch_api(client):
     assert r2.json()["mode"] == "demo"
     assert r2.json()["is_demo"] is True
 
-    # 3. In demo mode, cameras endpoint returns demo cameras (CAM-001 North, CAM-002 Central, CAM-003 South)
+    # 3. In demo mode, cameras endpoint returns demo cameras (CAM-001 to CAM-005)
     rcam = client.get("/api/v1/cameras")
     assert rcam.status_code == 200
     cams = rcam.json()
-    assert len(cams) == 3
+    assert len(cams) == 5
     assert cams[0]["id"] == "CAM-001"
     assert cams[1]["id"] == "CAM-002"
     assert cams[2]["id"] == "CAM-003"
+    assert cams[3]["id"] == "CAM-004"
+    assert cams[4]["id"] == "CAM-005"
 
     # 4. Switch back to 'real'
     r3 = client.post("/api/v1/system/mode", json={"mode": "real"})

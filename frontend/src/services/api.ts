@@ -28,12 +28,17 @@ const boundBackendUrl =
     ? `${process.env.BACKEND_URL.replace(/\/$/, '')}/api/v1`
     : undefined;
 
+const DEFAULT_PRODUCTION_BACKEND = 'https://quotes-stored-readers-livecam.trycloudflare.com/api/v1';
+
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   boundBackendUrl ||
-  (typeof window !== 'undefined' && window.location.origin
-    ? `${window.location.origin}/api/v1`
+  (typeof window !== 'undefined'
+    ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? `${window.location.origin}/api/v1`
+        : DEFAULT_PRODUCTION_BACKEND)
     : 'http://localhost:8000/api/v1');
+
 
 
 async function handleResponse<T>(res: Response, errorMessage: string): Promise<T> {

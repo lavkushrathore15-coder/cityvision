@@ -3,6 +3,7 @@ CITYVISION AI - Main Backend Application Entry Point
 FastAPI Application with CORS middleware, structured error responses, and logging.
 Problem Statement ID: SIH26127
 """
+import sys
 import logging
 import datetime
 from pathlib import Path
@@ -11,6 +12,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.exceptions import RequestValidationError, HTTPException
 from fastapi.staticfiles import StaticFiles
+
+# Ensure repository root is in sys.path for absolute module resolution
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 from backend.app.core.config import BASE_DIR, settings
 from backend.app.api.routes import router as api_router
@@ -31,13 +37,26 @@ app = FastAPI(
 )
 
 # Configure CORS for React frontend
+_allow_creds = "*" not in settings.CORS_ORIGINS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=_allow_creds,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/health", tags=["System"])
+def health_check():
+    """Liveness and readiness health check endpoint."""
+    return {
+        "status": "healthy",
+        "service": settings.PROJECT_NAME,
+        "env": settings.APP_ENV,
+        "inference_device": settings.INFERENCE_DEVICE,
+    }
+
 
 
 @app.exception_handler(HTTPException)

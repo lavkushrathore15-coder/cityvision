@@ -1,3 +1,13 @@
+---
+title: CityVision AI Backend
+emoji: 🏙️
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # CITYVISION AI
 
 **City-Wide AI Engine for Multi-Camera ANPR Trajectory Tracking and Urban Traffic Analytics**  
