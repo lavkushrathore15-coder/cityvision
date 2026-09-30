@@ -17,7 +17,7 @@ RUN useradd -m -u 1000 user
 ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH \
     PYTHONUNBUFFERED=1 \
-    PORT=7860 \
+    PORT=8000 \
     INFERENCE_DEVICE=cpu
 
 WORKDIR $HOME/app
@@ -41,7 +41,7 @@ RUN mkdir -p $HOME/app/data && chmod -R 777 $HOME/app/data && \
 
 USER user
 
-EXPOSE 7860
+EXPOSE 8000
 
-# Launch FastAPI backend with uvicorn listening on 0.0.0.0 and port $PORT (default 7860)
-CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-7860}"]
+# Launch FastAPI backend with uvicorn listening on 0.0.0.0 and port $PORT (default 8000)
+CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

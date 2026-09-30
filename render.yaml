@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: cityvision-backend
+    runtime: python
+    region: oregon
+    plan: free
+    branch: main
+    buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: APP_ENV
+        value: production
+      - key: INFERENCE_DEVICE
+        value: cpu
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: DEMO_MODE
+        value: "true"

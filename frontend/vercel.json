@@ -1,18 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://quotes-stored-readers-livecam.trycloudflare.com/api/:path*"
-    },
-    {
-      "source": "/docs",
-      "destination": "https://quotes-stored-readers-livecam.trycloudflare.com/docs"
-    },
-    {
-      "source": "/openapi.json",
-      "destination": "https://quotes-stored-readers-livecam.trycloudflare.com/openapi.json"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -148,3 +148,30 @@ npm run dev
 * [x] **Phase 7 (Pipeline Orchestrator & Telemetry API)**: 14-stage unified execution orchestrator (`backend/app/services/pipeline_orchestrator.py`), dual-mode runtime (Real CCTV & Isolated Demo Simulation), 33 REST endpoints, and WebSocket telemetry broadcaster (`/ws/telemetry`).
 * [x] **Phase 8 (GIS Command Center Dashboard)**: React 19 + TypeScript + Vite operations dashboard (`frontend/`), interactive Leaflet GIS map with trajectory path lines, multi-camera CCTV grid with video playback, global plate search & filter, vehicle dossier modal, real-time alert notifications, and traffic analytics charts.
 * [x] **Automated Test Suite**: 146 unit & integration tests passing across all subsystems (`pytest`).
+
+---
+
+## Production Deployment Guide ($0 Free Cloud Architecture)
+
+### 1. Backend Deployment (Render.com Web Service - $0 Free)
+The CITYVISION AI backend can be deployed directly on **Render** (Free Tier):
+1. Navigate to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** > **Web Service** (or **Blueprint** using `render.yaml`).
+3. Connect your GitHub repository: `https://github.com/lavkushrathore15-coder/cityvision`.
+4. Configure service parameters:
+   - **Environment**: `Python 3`
+   - **Build Command**: `pip install --upgrade pip && pip install -r backend/requirements.txt`
+   - **Start Command**: `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+   - **Health Check Path**: `/health`
+   - **Plan**: `Free`
+5. Click **Deploy Web Service**.
+6. Once deployed, Render provides a permanent public HTTPS URL, for example:
+   `https://cityvision-backend.onrender.com`
+
+### 2. Frontend Configuration (Vercel)
+In your Vercel project settings (`Settings` > `Environment Variables`):
+1. **`VITE_API_URL`**: Set to your deployed backend URL:
+   - Render: `https://cityvision-backend.onrender.com/api/v1`
+   - (Or live tunnel: `https://anymore-detect-poly-learning.trycloudflare.com/api/v1`)
+2. **`VITE_GOOGLE_MAPS_API_KEY`**: Your Google Maps JavaScript API key (for Google satellite/roadmap basemaps).
+3. Trigger a redeploy in Vercel to bake in the environment variables into the Vite production bundle.

@@ -55,29 +55,12 @@ class Settings:
     SECRET_KEY: str = os.getenv("SECRET_KEY", "cityvision-dev-insecure-change-in-production")
     
     # CORS
-    _cors_env = os.getenv("CORS_ORIGINS")
+    _cors_env = os.getenv("CORS_ORIGINS", "*")
     CORS_ORIGINS: List[str] = (
-        [origin.strip() for origin in _cors_env.split(",") if origin.strip()]
+        ["*"] if _cors_env.strip() == "*"
+        else [origin.strip() for origin in _cors_env.split(",") if origin.strip()]
         if _cors_env
-        else [
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            "http://localhost:8000",
-            "http://127.0.0.1:8000",
-            "https://cityvision-ai.vercel.app",
-            *(
-                [f"https://{os.getenv('VERCEL_URL')}", f"http://{os.getenv('VERCEL_URL')}"]
-                if os.getenv("VERCEL_URL")
-                else []
-            ),
-            *(
-                [os.getenv("FRONTEND_URL").strip()]
-                if os.getenv("FRONTEND_URL")
-                else []
-            ),
-        ]
+        else ["*"]
     )
 
 

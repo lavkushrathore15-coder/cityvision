@@ -21,22 +21,30 @@ import type {
   DemoStatusResponse,
 } from '../types';
 
-// Resolve base URL from bound service environment variable (e.g. Vercel service binding BACKEND_URL),
-// explicit Vite build env, browser origin, or local development fallback.
+function normalizeApiUrl(raw?: string): string | undefined {
+  if (!raw || typeof raw !== 'string') return undefined;
+  const trimmed = raw.trim().replace(/\/+$/, '');
+  if (!trimmed) return undefined;
+  return trimmed.endsWith('/api/v1') ? trimmed : `${trimmed}/api/v1`;
+}
+
+// Fallback to active live tunnel or origin
+const LIVE_FALLBACK_BACKEND = 'https://anymore-detect-poly-learning.trycloudflare.com/api/v1';
+
 const boundBackendUrl =
   typeof process !== 'undefined' && process.env?.BACKEND_URL
-    ? `${process.env.BACKEND_URL.replace(/\/$/, '')}/api/v1`
+    ? normalizeApiUrl(process.env.BACKEND_URL)
     : undefined;
 
-const DEFAULT_PRODUCTION_BACKEND = 'https://quotes-stored-readers-livecam.trycloudflare.com/api/v1';
+const envApiUrl = normalizeApiUrl(import.meta.env.VITE_API_URL);
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
+  envApiUrl ||
   boundBackendUrl ||
   (typeof window !== 'undefined'
     ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? `${window.location.origin}/api/v1`
-        : DEFAULT_PRODUCTION_BACKEND)
+        : LIVE_FALLBACK_BACKEND)
     : 'http://localhost:8000/api/v1');
 
 
